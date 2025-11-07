@@ -7,8 +7,21 @@ const TarjetaJuego = ({ juego, onEditar, onEliminar }) => {
   const [mostrarReseñas, setMostrarReseñas] = useState(false);
   const [cargandoReseñas, setCargandoReseñas] = useState(false);
 
+  // CARGAR RESEÑAS AUTOMÁTICAMENTE al montar el componente
+  useEffect(() => {
+    const cargarReseñas = async () => {
+      try {
+        const respuesta = await axios.get(`http://localhost:5000/api/resenas/juego/${juego._id}`);
+        setReseñas(respuesta.data);
+      } catch (error) {
+        console.error('Error cargando reseñas:', error);
+      }
+    };
+    cargarReseñas();
+  }, [juego._id]); // Se recarga cuando cambia el ID del juego
+
   const obtenerReseñas = async () => {
-    if (!mostrarReseñas && reseñas.length === 0) {
+    if (!mostrarReseñas) {
       setCargandoReseñas(true);
       try {
         const respuesta = await axios.get(`http://localhost:5000/api/resenas/juego/${juego._id}`);
@@ -45,7 +58,7 @@ const TarjetaJuego = ({ juego, onEditar, onEliminar }) => {
           <span className="badge año">{juego.añoLanzamiento}</span>
           {reseñas.length > 0 && (
             <span className="badge reseñas">
-              ⭐ {puntuacionPromedio}
+              ⭐ {puntuacionPromedio} ({reseñas.length})
             </span>
           )}
         </div>
@@ -69,7 +82,7 @@ const TarjetaJuego = ({ juego, onEditar, onEliminar }) => {
         {/* Sección de reseñas */}
         {mostrarReseñas && (
           <div className="reseñas-container">
-            <h4>📋 Reseñas</h4>
+            <h4>📋 Reseñas ({reseñas.length})</h4>
             {cargandoReseñas ? (
               <p>Cargando reseñas...</p>
             ) : reseñas.length > 0 ? (

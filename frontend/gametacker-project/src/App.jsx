@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BibliotecaJuegos from './components/BibliotecaJuegos';
 import FormularioJuego from './components/FormularioJuego';
 import FormularioResena from './components/FormularioResena';
@@ -8,6 +8,19 @@ function App() {
   const [juegosActualizados, setJuegosActualizados] = useState(0);
   const [reseñasActualizadas, setReseñasActualizadas] = useState(0);
   const [juegos, setJuegos] = useState([]);
+
+  useEffect(() => {
+    const obtenerJuegos = async () => {
+      try {
+        const respuesta = await fetch('http://localhost:5000/api/juegos');
+        const datos = await respuesta.json();
+        setJuegos(datos);
+      } catch (error) {
+        console.error('Error obteniendo juegos:', error);
+      }
+    };
+    obtenerJuegos();
+  }, [juegosActualizados]);
 
   const handleJuegoAgregado = () => {
     setJuegosActualizados(prev => prev + 1);
@@ -25,14 +38,30 @@ function App() {
       </header>
       
       <div className="app-contenido">
-        <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
-        <FormularioResena 
-          juegos={juegos} 
-          onResenaAgregada={handleResenaAgregada} 
-        />
-        <BibliotecaJuegos 
-          key={juegosActualizados + reseñasActualizadas} 
-        />
+        {/* SECCIÓN BIBLIOTECA - ARRIBA */}
+        <section className="biblioteca-section">
+          <BibliotecaJuegos 
+            key={juegosActualizados + reseñasActualizadas} 
+          />
+        </section>
+
+        {/* SECCIÓN FORMULARIOS - ABAJO */}
+        <section className="formularios-section">
+          <h2 className="text-center">➕ Agregar Contenido</h2>
+          <div className="formularios-grid">
+            <div className="formulario-container">
+              <h3>🎮 Nuevo Juego</h3>
+              <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
+            </div>
+            <div className="formulario-container">
+              <h3>⭐ Nueva Reseña</h3>
+              <FormularioResena 
+                juegos={juegos} 
+                onResenaAgregada={handleResenaAgregada} 
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
