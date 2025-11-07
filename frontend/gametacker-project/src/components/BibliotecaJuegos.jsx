@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TarjetaJuego from './TarjetaJuego';
 import './BibliotecaJuegos.css';
 
 const BibliotecaJuegos = () => {
@@ -7,13 +8,16 @@ const BibliotecaJuegos = () => {
   const [cargando, setCargando] = useState(true);
   const [editandoJuego, setEditandoJuego] = useState(null);
 
+
   const obtenerJuegos = async () => {
     try {
+      console.log('🔄 Obteniendo juegos...');
       const respuesta = await axios.get('http://localhost:5000/api/juegos');
+      console.log('✅ Juegos obtenidos:', respuesta.data);
       setJuegos(respuesta.data);
       setCargando(false);
     } catch (error) {
-      console.error('Error obteniendo juegos:', error);
+      console.error('❌ Error obteniendo juegos:', error);
       setCargando(false);
     }
   };
@@ -22,7 +26,7 @@ const BibliotecaJuegos = () => {
     if (window.confirm('¿Estás seguro de eliminar este juego?')) {
       try {
         await axios.delete(`http://localhost:5000/api/juegos/${id}`);
-        obtenerJuegos(); // Recargar la lista
+        obtenerJuegos(); 
         alert('Juego eliminado correctamente');
       } catch (error) {
         console.error('Error eliminando juego:', error);
@@ -36,7 +40,7 @@ const BibliotecaJuegos = () => {
     try {
       await axios.put(`http://localhost:5000/api/juegos/${editandoJuego._id}`, editandoJuego);
       setEditandoJuego(null);
-      obtenerJuegos(); // Recargar la lista
+      obtenerJuegos(); 
       alert('Juego actualizado correctamente');
     } catch (error) {
       console.error('Error actualizando juego:', error);
@@ -48,15 +52,13 @@ const BibliotecaJuegos = () => {
     obtenerJuegos();
   }, []);
 
-  if (cargando) {
-    return <div className="cargando">Cargando juegos...</div>;
-  }
-
   return (
     <div className="biblioteca-container">
       <h1 className="biblioteca-titulo">🎮 Mi Biblioteca de Juegos</h1>
+      <p className="biblioteca-subtitulo">
+        {juegos.length} juego{juegos.length !== 1 ? 's' : ''} en tu colección
+      </p>
       
-      {/* Modal de edición */}
       {editandoJuego && (
         <div className="modal-overlay">
           <div className="modal">
@@ -89,35 +91,23 @@ const BibliotecaJuegos = () => {
         </div>
       )}
 
-      <div className="juegos-grid">
-        {juegos.map(juego => (
-          <div key={juego._id} className="juego-card">
-            <img src={juego.imagenPortada} alt={juego.titulo} className="juego-imagen" />
-            <h3 className="juego-titulo">{juego.titulo}</h3>
-            <p className="juego-genero">{juego.genero}</p>
-            <p className="juego-plataforma">{juego.plataforma}</p>
-            <span className={`juego-estado ${juego.completado ? 'completado' : 'pendiente'}`}>
-              {juego.completado ? '✅ Completado' : '⏳ Pendiente'}
-            </span>
-            
-            {/* Botones de acciones */}
-            <div className="juego-acciones">
-              <button 
-                className="btn-editar"
-                onClick={() => setEditandoJuego(juego)}
-              >
-                ✏️ Editar
-              </button>
-              <button 
-                className="btn-eliminar"
-                onClick={() => eliminarJuego(juego._id)}
-              >
-                🗑️ Eliminar
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      {cargando ? (
+        <div className="cargando-container">
+          <div className="cargando-spinner"></div>
+          <p>Cargando tu biblioteca...</p>
+        </div>
+      ) : (
+        <div className="juegos-grid">
+          {juegos.map(juego => (
+            <TarjetaJuego 
+              key={juego._id}
+              juego={juego}
+              onEditar={setEditandoJuego}
+              onEliminar={eliminarJuego}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
