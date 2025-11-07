@@ -1,0 +1,150 @@
+/* FORMULARIORESENA.CSS - Solo estilos del formulario de reseñas */
+.formulario-resena-container {
+  margin-bottom: 30px;
+}
+
+.btn-mostrar-formulario {
+  background: #9b59b6;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-mostrar-formulario:hover {
+  background: #8e44ad;
+  transform: scale(1.05);
+}
+
+.formulario-resena {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-top: 15px;
+  max-width: 600px;
+}
+
+.formulario-resena h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.formulario-resena select,
+.formulario-resena textarea,
+.formulario-resena input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-resena select:focus,
+.formulario-resena textarea:focus,
+.formulario-resena input:focus {
+  outline: none;
+  border-color: #9b59b6;
+}
+
+.formulario-resena textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.puntuacion-estrellas {
+  margin-bottom: 20px;
+}
+
+.puntuacion-estrellas label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.estrellas {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.estrella {
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.3;
+}
+
+.estrella.activa {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.estrella:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.puntuacion-texto {
+  font-size: 12px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.form-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grupo label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.checkbox-label input {
+  width: auto;
+  margin-bottom: 0;
+}
+
+.btn-agregar-resena {
+  background: #27ae60;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.btn-agregar-resena:hover {
+  background: #219a52;
+}

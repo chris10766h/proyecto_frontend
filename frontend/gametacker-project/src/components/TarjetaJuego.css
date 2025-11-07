@@ -1,3 +1,4 @@
+/* TARJETAJUEGO.CSS - Solo estilos de tarjetas */
 .tarjeta-juego {
   background: white;
   border-radius: 15px;
@@ -55,6 +56,10 @@
   background: #9b59b6;
 }
 
+.badge.reseñas {
+  background: #f39c12;
+}
+
 .tarjeta-contenido {
   padding: 20px;
 }
@@ -92,10 +97,13 @@
   -webkit-box-orient: vertical;
   line-clamp: 3;
   box-orient: vertical;
-  max-height: 4.2em; 
+  max-height: 4.2em;
 }
 
-.tarjeta-estado-container {
+.tarjeta-estadisticas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
 }
 
@@ -116,6 +124,102 @@
 .estado.pendiente {
   background: #e67e22;
   color: white;
+}
+
+.contador-reseñas {
+  font-size: 12px;
+  color: #3498db;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #ebf5fb;
+  transition: all 0.3s ease;
+}
+
+.contador-reseñas:hover {
+  background: #3498db;
+  color: white;
+}
+
+.reseñas-container {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #3498db;
+}
+
+.reseñas-container h4 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.lista-reseñas {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.reseña-item {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+}
+
+.reseña-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.reseña-estrellas {
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.reseña-meta {
+  font-size: 10px;
+  color: #7f8c8d;
+}
+
+.reseña-texto {
+  font-size: 12px;
+  color: #5d6d7e;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.reseña-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.recomendacion {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.recomendacion.recomendado {
+  background: #27ae60;
+  color: white;
+}
+
+.recomendacion.no-recomendado {
+  background: #e74c3c;
+  color: white;
+}
+
+.sin-reseñas {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  font-size: 12px;
 }
 
 .tarjeta-acciones {
