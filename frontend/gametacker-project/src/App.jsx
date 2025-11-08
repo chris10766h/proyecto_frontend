@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BibliotecaJuegos from './components/BibliotecaJuegos';
 import FormularioJuego from './components/FormularioJuego';
 import FormularioResena from './components/FormularioResena';
+import EstadisticasPersonales from './components/EstadisticasPersonales';
 import './App.css';
 
 function App() {
@@ -43,6 +44,11 @@ function App() {
           <BibliotecaJuegos 
             key={juegosActualizados + reseñasActualizadas} 
           />
+        </section>
+
+        {/* SECCIÓN ESTADÍSTICAS - DESPUÉS DE BIBLIOTECA */}
+        <section className="estadisticas-section">
+          <EstadisticasPersonales />
         </section>
 
         {/* SECCIÓN FORMULARIOS - ABAJO */}

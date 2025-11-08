@@ -50,15 +50,23 @@ body {
   flex-direction: column;
 }
 
-/* SECCIÓN PRINCIPAL - Biblioteca arriba */
+/* ORDEN DE SECCIONES */
 .biblioteca-section {
   order: 1;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+.estadisticas-section {
+  order: 2;
+  margin-bottom: 2rem;
+}
+
+.formularios-section {
+  order: 3;
 }
 
 /* SECCIÓN FORMULARIOS - Abajo */
 .formularios-section {
-  order: 2;
   background: white;
   border-radius: 15px;
   padding: 2rem;
