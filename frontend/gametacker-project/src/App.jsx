@@ -46,21 +46,23 @@ function App() {
           />
         </section>
 
-        {/* SECCIÓN ESTADÍSTICAS - DESPUÉS DE BIBLIOTECA */}
+        {/* SECCIÓN ESTADÍSTICAS - EN MEDIO */}
         <section className="estadisticas-section">
           <EstadisticasPersonales />
         </section>
 
-        {/* SECCIÓN FORMULARIOS - ABAJO */}
+        {/* SECCIÓN FORMULARIOS - ABAJO (SIN BOTONES, FORMULARIOS DIRECTOS) */}
         <section className="formularios-section">
           <h2 className="text-center">➕ Agregar Contenido</h2>
           <div className="formularios-grid">
             <div className="formulario-container">
               <h3>🎮 Nuevo Juego</h3>
+              {/* FORMULARIO DIRECTO SIN BOTÓN DE MOSTRAR/OCULTAR */}
               <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
             </div>
             <div className="formulario-container">
               <h3>⭐ Nueva Reseña</h3>
+              {/* FORMULARIO DIRECTO SIN BOTÓN DE MOSTRAR/OCULTAR */}
               <FormularioResena 
                 juegos={juegos} 
                 onResenaAgregada={handleResenaAgregada} 
