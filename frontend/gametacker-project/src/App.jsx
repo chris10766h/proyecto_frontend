@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import BibliotecaJuegos from './components/BibliotecaJuegos';
 import FormularioJuego from './components/FormularioJuego';
 import FormularioResena from './components/FormularioResena';
@@ -9,13 +10,14 @@ function App() {
   const [juegosActualizados, setJuegosActualizados] = useState(0);
   const [reseñasActualizadas, setReseñasActualizadas] = useState(0);
   const [juegos, setJuegos] = useState([]);
+  const [vistaActual, setVistaActual] = useState('biblioteca'); // 'biblioteca' o 'estadisticas'
 
+  // Obtener juegos
   useEffect(() => {
     const obtenerJuegos = async () => {
       try {
-        const respuesta = await fetch('http://localhost:5000/api/juegos');
-        const datos = await respuesta.json();
-        setJuegos(datos);
+        const respuesta = await axios.get('http://localhost:5000/api/juegos');
+        setJuegos(respuesta.data);
       } catch (error) {
         console.error('Error obteniendo juegos:', error);
       }
@@ -36,40 +38,58 @@ function App() {
       <header className="app-header">
         <h1>🎮 GameTracker</h1>
         <p>Tu biblioteca personal de videojuegos</p>
+        
+        {/* NAVEGACIÓN CON BOTONES */}
+        <nav className="app-nav">
+          <button 
+            className={`nav-btn ${vistaActual === 'biblioteca' ? 'nav-btn-active' : ''}`}
+            onClick={() => setVistaActual('biblioteca')}
+          >
+            📚 Biblioteca
+          </button>
+          <button 
+            className={`nav-btn ${vistaActual === 'estadisticas' ? 'nav-btn-active' : ''}`}
+            onClick={() => setVistaActual('estadisticas')}
+          >
+            📊 Estadísticas
+          </button>
+        </nav>
       </header>
-      
+
       <div className="app-contenido">
-        {/* SECCIÓN BIBLIOTECA - ARRIBA */}
-        <section className="biblioteca-section">
-          <BibliotecaJuegos 
-            key={juegosActualizados + reseñasActualizadas} 
-          />
-        </section>
-
-        {/* SECCIÓN ESTADÍSTICAS - EN MEDIO */}
-        <section className="estadisticas-section">
-          <EstadisticasPersonales />
-        </section>
-
-        {/* SECCIÓN FORMULARIOS - ABAJO (SIN BOTONES, FORMULARIOS DIRECTOS) */}
-        <section className="formularios-section">
-          <h2 className="text-center">➕ Agregar Contenido</h2>
-          <div className="formularios-grid">
-            <div className="formulario-container">
-              <h3>🎮 Nuevo Juego</h3>
-              {/* FORMULARIO DIRECTO SIN BOTÓN DE MOSTRAR/OCULTAR */}
-              <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
-            </div>
-            <div className="formulario-container">
-              <h3>⭐ Nueva Reseña</h3>
-              {/* FORMULARIO DIRECTO SIN BOTÓN DE MOSTRAR/OCULTAR */}
-              <FormularioResena 
-                juegos={juegos} 
-                onResenaAgregada={handleResenaAgregada} 
+        {vistaActual === 'biblioteca' ? (
+          <>
+            {/* SECCIÓN BIBLIOTECA */}
+            <section className="biblioteca-section">
+              <BibliotecaJuegos 
+                key={juegosActualizados + reseñasActualizadas} 
               />
-            </div>
-          </div>
-        </section>
+            </section>
+
+            {/* SECCIÓN FORMULARIOS - ABAJO */}
+            <section className="formularios-section">
+              <h2 className="seccion-titulo">➕ Agregar Contenido</h2>
+              <div className="formularios-grid">
+                <div className="formulario-container">
+                  <h3>🎮 Nuevo Juego</h3>
+                  <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
+                </div>
+                <div className="formulario-container">
+                  <h3>⭐ Nueva Reseña</h3>
+                  <FormularioResena 
+                    juegos={juegos} 
+                    onResenaAgregada={handleResenaAgregada} 
+                  />
+                </div>
+              </div>
+            </section>
+          </>
+        ) : (
+          /* SECCIÓN ESTADÍSTICAS */
+          <section className="estadisticas-section">
+            <EstadisticasPersonales />
+          </section>
+        )}
       </div>
     </div>
   );

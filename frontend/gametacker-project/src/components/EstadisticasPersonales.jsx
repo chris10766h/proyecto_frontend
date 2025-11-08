@@ -14,6 +14,8 @@ const EstadisticasPersonales = () => {
     juegosPorPlataforma: {}
   });
 
+  const [cargando, setCargando] = useState(true);
+
   useEffect(() => {
     const obtenerEstadisticas = async () => {
       try {
@@ -59,8 +61,10 @@ const EstadisticasPersonales = () => {
           juegosPorGenero,
           juegosPorPlataforma
         });
+        setCargando(false);
       } catch (error) {
         console.error('Error obteniendo estadísticas:', error);
+        setCargando(false);
       }
     };
 
@@ -71,106 +75,202 @@ const EstadisticasPersonales = () => {
     return total > 0 ? ((valor / total) * 100).toFixed(0) : 0;
   };
 
+  const getGeneroMasPopular = () => {
+    const entries = Object.entries(estadisticas.juegosPorGenero);
+    return entries.length > 0 ? entries.reduce((a, b) => a[1] > b[1] ? a : b) : ['N/A', 0];
+  };
+
+  const getPlataformaMasPopular = () => {
+    const entries = Object.entries(estadisticas.juegosPorPlataforma);
+    return entries.length > 0 ? entries.reduce((a, b) => a[1] > b[1] ? a : b) : ['N/A', 0];
+  };
+
+  const [generoMasPopular, countGenero] = getGeneroMasPopular();
+  const [plataformaMasPopular, countPlataforma] = getPlataformaMasPopular();
+
+  if (cargando) {
+    return (
+      <div className="estadisticas-container">
+        <div className="cargando-estadisticas">
+          <div className="spinner"></div>
+          <p>Cargando estadísticas...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="estadisticas-container">
-      <h2>📊 Mis Estadísticas de Gaming</h2>
+      <h2 className="estadisticas-titulo">📊 Dashboard de Gaming</h2>
       
+      {/* TARJETAS PRINCIPALES */}
       <div className="estadisticas-grid">
-        {/* Tarjetas de resumen */}
         <div className="estadistica-card total">
           <div className="estadistica-icon">🎮</div>
-          <div className="estadistica-info">
-            <h3>Total Juegos</h3>
+          <div className="estadistica-content">
+            <h3>Biblioteca Total</h3>
             <span className="estadistica-valor">{estadisticas.totalJuegos}</span>
+            <span className="estadistica-desc">juegos en colección</span>
           </div>
         </div>
 
-        <div className="estadistica-card completados">
-          <div className="estadistica-icon">✅</div>
-          <div className="estadistica-info">
-            <h3>Completados</h3>
-            <span className="estadistica-valor">{estadisticas.juegosCompletados}</span>
-            <span className="estadistica-porcentaje">
-              {calcularPorcentaje(estadisticas.juegosCompletados, estadisticas.totalJuegos)}%
-            </span>
-          </div>
-        </div>
-
-        <div className="estadistica-card pendientes">
-          <div className="estadistica-icon">⏳</div>
-          <div className="estadistica-info">
-            <h3>Pendientes</h3>
-            <span className="estadistica-valor">{estadisticas.juegosPendientes}</span>
-            <span className="estadistica-porcentaje">
-              {calcularPorcentaje(estadisticas.juegosPendientes, estadisticas.totalJuegos)}%
-            </span>
+        <div className="estadistica-card progreso">
+          <div className="estadistica-icon">📈</div>
+          <div className="estadistica-content">
+            <h3>Progreso</h3>
+            <div className="progreso-info">
+              <span className="progreso-completados">{estadisticas.juegosCompletados} completados</span>
+              <span className="progreso-porcentaje">
+                {calcularPorcentaje(estadisticas.juegosCompletados, estadisticas.totalJuegos)}%
+              </span>
+            </div>
+            <div className="progreso-bar">
+              <div 
+                className="progreso-fill"
+                style={{
+                  width: `${calcularPorcentaje(estadisticas.juegosCompletados, estadisticas.totalJuegos)}%`
+                }}
+              ></div>
+            </div>
           </div>
         </div>
 
         <div className="estadistica-card reseñas">
           <div className="estadistica-icon">⭐</div>
-          <div className="estadistica-info">
+          <div className="estadistica-content">
             <h3>Reseñas</h3>
             <span className="estadistica-valor">{estadisticas.totalResenas}</span>
+            <span className="estadistica-desc">opiniones escritas</span>
           </div>
         </div>
 
         <div className="estadistica-card puntuacion">
           <div className="estadistica-icon">🏆</div>
-          <div className="estadistica-info">
+          <div className="estadistica-content">
             <h3>Puntuación Promedio</h3>
             <span className="estadistica-valor">{estadisticas.promedioPuntuacion}/5</span>
+            <div className="estrellas-promedio">
+              {'⭐'.repeat(Math.round(estadisticas.promedioPuntuacion))}
+              {'☆'.repeat(5 - Math.round(estadisticas.promedioPuntuacion))}
+            </div>
           </div>
         </div>
 
         <div className="estadistica-card horas">
           <div className="estadistica-icon">⏰</div>
-          <div className="estadistica-info">
-            <h3>Horas Jugadas</h3>
+          <div className="estadistica-content">
+            <h3>Tiempo Invertido</h3>
             <span className="estadistica-valor">{estadisticas.totalHorasJugadas}h</span>
+            <span className="estadistica-desc">total jugadas</span>
+          </div>
+        </div>
+
+        <div className="estadistica-card preferencias">
+          <div className="estadistica-icon">❤️</div>
+          <div className="estadistica-content">
+            <h3>Preferencias</h3>
+            <div className="preferencias-list">
+              <div className="preferencia-item">
+                <span>Género favorito:</span>
+                <strong>{generoMasPopular}</strong>
+              </div>
+              <div className="preferencia-item">
+                <span>Plataforma principal:</span>
+                <strong>{plataformaMasPopular}</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Distribución por género */}
-      <div className="distribucion-section">
-        <h3>🎯 Distribución por Género</h3>
-        <div className="distribucion-grid">
-          {Object.entries(estadisticas.juegosPorGenero).map(([genero, cantidad]) => (
-            <div key={genero} className="distribucion-item">
-              <span className="distribucion-label">{genero}</span>
-              <div className="distribucion-bar">
-                <div 
-                  className="distribucion-fill"
-                  style={{
-                    width: `${calcularPorcentaje(cantidad, estadisticas.totalJuegos)}%`
-                  }}
-                ></div>
-              </div>
-              <span className="distribucion-valor">{cantidad}</span>
-            </div>
-          ))}
+      {/* GRÁFICOS DE DISTRIBUCIÓN */}
+      <div className="distribuciones-grid">
+        {/* Distribución por género */}
+        <div className="distribucion-card">
+          <h3>🎮 Distribución por Género</h3>
+          <div className="distribucion-lista">
+            {Object.entries(estadisticas.juegosPorGenero)
+              .sort(([,a], [,b]) => b - a)
+              .map(([genero, cantidad]) => (
+                <div key={genero} className="distribucion-item">
+                  <div className="distribucion-header">
+                    <span className="distribucion-label">{genero}</span>
+                    <span className="distribucion-porcentaje">
+                      {calcularPorcentaje(cantidad, estadisticas.totalJuegos)}%
+                    </span>
+                  </div>
+                  <div className="distribucion-bar">
+                    <div 
+                      className="distribucion-fill"
+                      style={{
+                        width: `${calcularPorcentaje(cantidad, estadisticas.totalJuegos)}%`,
+                        background: `hsl(${Math.random() * 360}, 70%, 60%)`
+                      }}
+                    ></div>
+                  </div>
+                  <span className="distribucion-valor">{cantidad} juegos</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {/* Distribución por plataforma */}
+        <div className="distribucion-card">
+          <h3>🖥️ Plataformas</h3>
+          <div className="plataformas-grid">
+            {Object.entries(estadisticas.juegosPorPlataforma)
+              .sort(([,a], [,b]) => b - a)
+              .map(([plataforma, cantidad]) => (
+                <div key={plataforma} className="plataforma-item">
+                  <div className="plataforma-icon">
+                    {plataforma.includes('PlayStation') && '🎮'}
+                    {plataforma.includes('Xbox') && '🎯'}
+                    {plataforma.includes('Nintendo') && '🍄'}
+                    {plataforma === 'PC' && '💻'}
+                    {plataforma === 'Mobile' && '📱'}
+                    {!['PlayStation', 'Xbox', 'Nintendo', 'PC', 'Mobile'].some(p => plataforma.includes(p)) && '🎪'}
+                  </div>
+                  <div className="plataforma-info">
+                    <span className="plataforma-nombre">{plataforma}</span>
+                    <span className="plataforma-cantidad">{cantidad} juegos</span>
+                  </div>
+                  <div className="plataforma-porcentaje">
+                    {calcularPorcentaje(cantidad, estadisticas.totalJuegos)}%
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
 
-      {/* Distribución por plataforma */}
-      <div className="distribucion-section">
-        <h3>🖥️ Distribución por Plataforma</h3>
-        <div className="distribucion-grid">
-          {Object.entries(estadisticas.juegosPorPlataforma).map(([plataforma, cantidad]) => (
-            <div key={plataforma} className="distribucion-item">
-              <span className="distribucion-label">{plataforma}</span>
-              <div className="distribucion-bar">
-                <div 
-                  className="distribucion-fill"
-                  style={{
-                    width: `${calcularPorcentaje(cantidad, estadisticas.totalJuegos)}%`
-                  }}
-                ></div>
-              </div>
-              <span className="distribucion-valor">{cantidad}</span>
-            </div>
-          ))}
+      {/* RESUMEN FINAL */}
+      <div className="resumen-final">
+        <h3>📋 Resumen General</h3>
+        <div className="resumen-grid">
+          <div className="resumen-item">
+            <span className="resumen-label">Tasa de Completado</span>
+            <span className="resumen-valor">
+              {calcularPorcentaje(estadisticas.juegosCompletados, estadisticas.totalJuegos)}%
+            </span>
+          </div>
+          <div className="resumen-item">
+            <span className="resumen-label">Ratio Reseñas/Juego</span>
+            <span className="resumen-valor">
+              {(estadisticas.totalResenas / estadisticas.totalJuegos).toFixed(1)}
+            </span>
+          </div>
+          <div className="resumen-item">
+            <span className="resumen-label">Horas por Juego</span>
+            <span className="resumen-valor">
+              {(estadisticas.totalHorasJugadas / estadisticas.totalJuegos).toFixed(0)}h
+            </span>
+          </div>
+          <div className="resumen-item">
+            <span className="resumen-label">Género Más Popular</span>
+            <span className="resumen-valor">{generoMasPopular}</span>
+          </div>
         </div>
       </div>
     </div>
