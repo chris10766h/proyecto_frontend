@@ -139,16 +139,45 @@ const FormularioJuego = ({ onJuegoAgregado }) => {
           />
         </div>
 
-        <div className="form-grupo">
-          <label>URL de la Imagen de Portada *</label>
-          <input
-            type="url"
-            name="imagenPortada"
-            placeholder="https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7y.jpg"
-            value={formData.imagenPortada}
-            onChange={handleChange}
-            required
-          />
+        <div className="form-grupo"><label>Imagen de portada
+          
+        </label>
+<div
+  className="drop-zone"
+  onDragOver={(e) => e.preventDefault()}
+  onDrop={(e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData((prev) => ({
+          ...prev,
+          imagenPortada: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  }}
+>
+  {formData.imagenPortada ? (
+    <img
+      src={formData.imagenPortada}
+      alt="Vista previa"
+      className="vista-previa"
+    />
+  ) : (
+    <p>📁 Arrastra una imagen aquí o pega una URL</p>
+  )}
+</div>
+
+<input
+  type="url"
+  name="imagenPortada"
+  value={formData.imagenPortada}
+  onChange={handleChange}
+  placeholder="O ingresa una URL manualmente"
+/>
           {formData.imagenPortada && (
             <div className="vista-previa">
               <img 

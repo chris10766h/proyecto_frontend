@@ -5,7 +5,7 @@
 }
 
 .btn-mostrar-formulario {
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  background: linear-gradient(135deg, #3471db, #2980b9);
   color: white;
   padding: 14px 24px;
   border: none;
@@ -148,4 +148,22 @@
   .formulario-juego {
     padding: 1.5rem;
   }
+}
+.drop-zone {
+  border: 2px dashed var(--color-boton);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.vista-previa {
+  max-width: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
 }

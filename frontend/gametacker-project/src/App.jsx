@@ -12,6 +12,7 @@ function App() {
   const [reseñasActualizadas, setReseñasActualizadas] = useState(0);
   const [juegos, setJuegos] = useState([]);
   const [vistaActual, setVistaActual] = useState('biblioteca'); // 'biblioteca', 'reseñas' o 'estadisticas'
+const [modoOscuro, setModoOscuro] = useState(true); // por defecto oscuro
 
   // Obtener juegos
   useEffect(() => {
@@ -35,12 +36,11 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${modoOscuro ? "dark" : "light"}`}>
       {/* ENCABEZADO */}
       <header className="app-header">
         <h1>🎮 GameTracker</h1>
         <p>Tu biblioteca personal de videojuegos</p>
-        
         {/* NAVEGACIÓN CON BOTONES */}
         <nav className="app-nav">
           <button 
@@ -64,6 +64,17 @@ function App() {
             📊 Estadísticas
           </button>
         </nav>
+        {/* 🌙 Botón Modo Oscuro */}
+    <div 
+      className="toggle-container"
+      onClick={() => setModoOscuro(!modoOscuro)}
+    >
+      <div className={`toggle-modo ${modoOscuro ? "oscuro" : "claro"}`}>
+        <div className="toggle-circulo">
+          {modoOscuro ? "🌙" : "☀️"}
+        </div>
+      </div>
+    </div>  
       </header>
 
       {/* CONTENIDO PRINCIPAL */}
@@ -85,13 +96,6 @@ function App() {
                   <h3>🎮 Nuevo Juego</h3>
                   <FormularioJuego onJuegoAgregado={handleJuegoAgregado} />
                 </div>
-                <div className="formulario-container">
-                  <h3>⭐ Nueva Reseña</h3>
-                  <FormularioResena 
-                    juegos={juegos} 
-                    onResenaAgregada={handleResenaAgregada} 
-                  />
-                </div>
               </div>
             </section>
           </>
@@ -102,6 +106,13 @@ function App() {
           <section className="reseñas-section">
             <h2 className="seccion-titulo">📝 Reseñas Registradas</h2>
             <ListaResenas />
+  <div className="formulario-container">
+                  <h3>⭐ Nueva Reseña</h3>
+                  <FormularioResena 
+                    juegos={juegos} 
+                    onResenaAgregada={handleResenaAgregada} 
+                  />
+                </div>
           </section>
         )}
 

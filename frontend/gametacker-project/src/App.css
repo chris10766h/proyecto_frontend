@@ -20,29 +20,87 @@ body {
 
 /* HEADER */
 .app-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-  color: white;
-  padding: 2rem 0;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #0f4c81, #007bff);
+  color: white;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
   position: relative;
 }
 
-.app-header h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.app-header p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
+/* --- BOTONES DE NAVEGACIÓN --- */
+.app-nav {
+  display: flex;
+  gap: 1rem;
 }
 
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.nav-btn-active {
+  background: white;
+  color: #007bff;
+  border-color: white;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* --- TOGGLE DE MODO OSCURO --- */
+.toggle-modo {
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.toggle-circulo {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-modo.oscuro .toggle-circulo {
+  transform: translateX(28px);
+}
+
+.toggle-modo:hover {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
 /* NAVEGACIÓN */
 .app-nav {
   display: flex;
@@ -115,8 +173,8 @@ body {
 
 .formularios-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+
+  
 }
 
 .formulario-container {
@@ -274,4 +332,39 @@ button {
 
 button:hover {
   transform: translateY(-2px);
+}
+
+/* --- MODO OSCURO / CLARO --- */
+:root {
+  --color-fondo: #111827;
+  --color-texto: #f9fafb;
+  --color-card: #1f2937;
+  --color-boton: #3b82f6;
+}
+
+.App.light {
+  --color-fondo: #f9fafb;
+  --color-texto: #111827;
+  --color-card: #e5e7eb;
+  --color-boton: #2563eb;
+}
+
+.App {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  transition: 0.3s ease;
+}
+
+.card, .formulario-container, .reseña-card {
+  background-color: var(--color-card);
+  color: var(--color-texto);
+}
+
+button {
+  background-color: var(--color-boton);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
