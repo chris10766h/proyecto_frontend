@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import './EstadisticasPersonales.css';
 
 const EstadisticasPersonales = () => {
@@ -85,8 +87,36 @@ const EstadisticasPersonales = () => {
     return entries.length > 0 ? entries.reduce((a, b) => a[1] > b[1] ? a : b) : ['N/A', 0];
   };
 
-  const [generoMasPopular, countGenero] = getGeneroMasPopular();
-  const [plataformaMasPopular, countPlataforma] = getPlataformaMasPopular();
+  const [generoMasPopular] = getGeneroMasPopular();
+  const [plataformaMasPopular] = getPlataformaMasPopular();
+
+  // 📄 Función para exportar estadísticas a PDF
+  const exportarEstadisticasPDF = () => {
+    const elemento = document.querySelector(".estadisticas-container");
+
+    if (!elemento) {
+      console.error("❌ No se encontró el contenedor de estadísticas (.estadisticas-container)");
+      return;
+    }
+
+    html2canvas(elemento, { scale: 2, useCORS: true }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      pdf.setFontSize(16);
+      pdf.text("📊 Dashboard de GameTracker", 10, 15);
+
+      const ancho = pdf.internal.pageSize.getWidth();
+      const alto = (canvas.height * ancho) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 25, ancho, alto);
+
+      const fecha = new Date().toLocaleDateString();
+      pdf.setFontSize(10);
+      pdf.text(`📅 Exportado el: ${fecha}`, 150, 15);
+
+      pdf.save("Estadisticas_GameTracker.pdf");
+    });
+  };
 
   if (cargando) {
     return (
@@ -101,8 +131,13 @@ const EstadisticasPersonales = () => {
 
   return (
     <div className="estadisticas-container">
-      <h2 className="estadisticas-titulo">📊 Dashboard de Gaming</h2>
-      
+      <div className="estadisticas-header">
+        <h2 className="estadisticas-titulo">📊 Dashboard de Gaming</h2>
+        <button className="btn-exportar" onClick={exportarEstadisticasPDF}>
+          📄 Exportar a PDF
+        </button>
+      </div>
+
       {/* TARJETAS PRINCIPALES */}
       <div className="estadisticas-grid">
         <div className="estadistica-card total">
