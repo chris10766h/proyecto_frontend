@@ -4,13 +4,14 @@ import BibliotecaJuegos from './components/BibliotecaJuegos';
 import FormularioJuego from './components/FormularioJuego';
 import FormularioResena from './components/FormularioResena';
 import EstadisticasPersonales from './components/EstadisticasPersonales';
+import ListaResenas from './components/ListaResenas';
 import './App.css';
 
 function App() {
   const [juegosActualizados, setJuegosActualizados] = useState(0);
   const [reseñasActualizadas, setReseñasActualizadas] = useState(0);
   const [juegos, setJuegos] = useState([]);
-  const [vistaActual, setVistaActual] = useState('biblioteca'); // 'biblioteca' o 'estadisticas'
+  const [vistaActual, setVistaActual] = useState('biblioteca'); // 'biblioteca', 'reseñas' o 'estadisticas'
 
   // Obtener juegos
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <div className="App">
+      {/* ENCABEZADO */}
       <header className="app-header">
         <h1>🎮 GameTracker</h1>
         <p>Tu biblioteca personal de videojuegos</p>
@@ -47,6 +49,14 @@ function App() {
           >
             📚 Biblioteca
           </button>
+
+          <button 
+            className={`nav-btn ${vistaActual === 'reseñas' ? 'nav-btn-active' : ''}`}
+            onClick={() => setVistaActual('reseñas')}
+          >
+            📝 Reseñas
+          </button>
+
           <button 
             className={`nav-btn ${vistaActual === 'estadisticas' ? 'nav-btn-active' : ''}`}
             onClick={() => setVistaActual('estadisticas')}
@@ -56,8 +66,9 @@ function App() {
         </nav>
       </header>
 
+      {/* CONTENIDO PRINCIPAL */}
       <div className="app-contenido">
-        {vistaActual === 'biblioteca' ? (
+        {vistaActual === 'biblioteca' && (
           <>
             {/* SECCIÓN BIBLIOTECA */}
             <section className="biblioteca-section">
@@ -66,7 +77,7 @@ function App() {
               />
             </section>
 
-            {/* SECCIÓN FORMULARIOS - ABAJO */}
+            {/* SECCIÓN FORMULARIOS */}
             <section className="formularios-section">
               <h2 className="seccion-titulo">➕ Agregar Contenido</h2>
               <div className="formularios-grid">
@@ -84,7 +95,17 @@ function App() {
               </div>
             </section>
           </>
-        ) : (
+        )}
+
+        {vistaActual === 'reseñas' && (
+          /* SECCIÓN LISTA DE RESEÑAS */
+          <section className="reseñas-section">
+            <h2 className="seccion-titulo">📝 Reseñas Registradas</h2>
+            <ListaResenas />
+          </section>
+        )}
+
+        {vistaActual === 'estadisticas' && (
           /* SECCIÓN ESTADÍSTICAS */
           <section className="estadisticas-section">
             <EstadisticasPersonales />
