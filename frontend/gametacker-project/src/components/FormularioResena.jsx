@@ -115,7 +115,6 @@ const FormularioResena = ({ juegos, onResenaAgregada }) => {
               <option value="Fácil">Fácil</option>
               <option value="Normal">Normal</option>
               <option value="Difícil">Difícil</option>
-              <option value="Muy Difícil">Muy Difícil</option>
             </select>
           </div>
         </div>
