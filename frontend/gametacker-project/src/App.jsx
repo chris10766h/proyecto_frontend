@@ -12,7 +12,17 @@ function App() {
   const [reseñasActualizadas, setReseñasActualizadas] = useState(0);
   const [juegos, setJuegos] = useState([]);
   const [vistaActual, setVistaActual] = useState('biblioteca'); // 'biblioteca', 'reseñas' o 'estadisticas'
-const [modoOscuro, setModoOscuro] = useState(true); // por defecto oscuro
+const [modoOscuro, setModoOscuro] = useState(false); // por defecto CLARO
+
+  // Aplicar clase global para variables de tema
+  useEffect(() => {
+    const root = document.documentElement;
+    if (modoOscuro) {
+      root.classList.add('theme-dark');
+    } else {
+      root.classList.remove('theme-dark');
+    }
+  }, [modoOscuro]);
 
   // Obtener juegos
   useEffect(() => {
@@ -36,7 +46,7 @@ const [modoOscuro, setModoOscuro] = useState(true); // por defecto oscuro
   };
 
   return (
-    <div className={`App ${modoOscuro ? "dark" : "light"}`}>
+    <div className={`App`}>
       {/* ENCABEZADO */}
       <header className="app-header">
         <h1>🎮 GameTracker</h1>
@@ -64,7 +74,7 @@ const [modoOscuro, setModoOscuro] = useState(true); // por defecto oscuro
             📊 Estadísticas
           </button>
         </nav>
-        {/* 🌙 Botón Modo Oscuro */}
+        {/* 🌙/☀️ Toggle de tema */}
     <div 
       className="toggle-container"
       onClick={() => setModoOscuro(!modoOscuro)}

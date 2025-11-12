@@ -1,5 +1,47 @@
-/* APP.CSS - Estilos principales con navegación */
+/* APP.CSS - Estilos principales con navegación y variables de tema */
 
+:root {
+  /* Paleta CLARA (imagen 3) */
+  --color-bg: #e6f3ff; /* ✅ fondo general azul celeste suave */
+  --color-surface: #fdf8f8; /* tarjetas/superficies */
+  --color-text: #111827; /* texto principal oscuro */
+  --color-text-muted: #758BA5; /* texto secundario */
+  --color-border: #D1DDED; /* bordes suaves */
+  --color-primary: #74b1f7; /* azul vivo */
+  --color-primary-600: #3c5d88; /* azul profundo */
+  --color-primary-100: #B3D6F9; /* azul claro */
+  --color-success: #27AE60;
+  --color-warning: #df9c62;
+  --color-danger: #dba19a;
+
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --shadow-1: 0 4px 20px rgba(44, 75, 112, 0.1);
+  --shadow-2: 0 8px 32px rgba(135, 6, 6, 0.12);
+
+  --header-grad-start: #3281e9;
+  --header-grad-end: #b6d6fa;
+}
+
+.theme-dark {
+  /* Paleta OSCURA (imagen 2) */
+  --color-bg: #0b132b; /* ✅ azul oscuro elegante */
+  --color-surface: #2B4F73;
+  --color-text: #D1DDED;
+  --color-text-muted: #658B9F;
+  --color-border: #658B9F;
+  --color-primary: #DEA15E; /* dorado */
+  --color-primary-600: #C9523B; /* óxido */
+  --color-primary-100: #844443; /* acento cálido */
+  --color-success: #27AE60;
+  --color-warning: #df9c62;
+  --color-danger: #dba19a;
+
+  --header-grad-start: #122842;
+  --header-grad-end: #68441d;
+}
+
+/* RESET Y BASE */
 * {
   margin: 0;
   padding: 0;
@@ -8,22 +50,27 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-bg);
   min-height: 100vh;
-  color: #2c3e50;
+  color: var(--color-text);
 }
 
 .App {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: var(--color-bg);
+}
+
+/* Transición suave de colores al cambiar de tema */
+.App, .App * {
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 /* HEADER */
 .app-header {
   text-align: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #0f4c81, #007bff);
-  color: white;
+  background: linear-gradient(135deg, var(--header-grad-start), var(--header-grad-end));
+  color: #fff;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   position: relative;
@@ -44,9 +91,9 @@ body {
 }
 
 .nav-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 50px;
   padding: 0.6rem 1.4rem;
   font-weight: 600;
@@ -55,14 +102,14 @@ body {
 }
 
 .nav-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
 .nav-btn-active {
-  background: white;
-  color: #007bff;
-  border-color: white;
+  background: #fff;
+  color: var(--color-primary);
+  border-color: #fff;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
@@ -101,6 +148,7 @@ body {
 .toggle-modo:hover {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
+
 /* NAVEGACIÓN */
 .app-nav {
   display: flex;
@@ -110,10 +158,10 @@ body {
 }
 
 .nav-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
   padding: 12px 30px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 25px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -123,14 +171,14 @@ body {
 }
 
 .nav-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .nav-btn-active {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
@@ -140,63 +188,43 @@ body {
 .app-contenido {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-  padding-bottom: 3rem;
+  padding: 0 20px 3rem;
 }
 
-/* SECCIÓN BIBLIOTECA */
-.biblioteca-section {
-  margin-bottom: 2rem;
-}
-
-/* SECCIÓN ESTADÍSTICAS */
+/* SECCIONES */
+.biblioteca-section,
 .estadisticas-section {
-  margin-bottom: 2rem;
+  margin-top: 2.5rem;
 }
 
-/* SECCIÓN FORMULARIOS */
 .formularios-section {
-  background: white;
-  border-radius: 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  border: 1px solid #e1e8ed;
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--color-border);
 }
 
 .seccion-titulo {
-  color: #2c3e50;
+  color: var(--color-text);
   text-align: center;
   margin-bottom: 2rem;
   font-size: 1.8rem;
   font-weight: 700;
 }
 
-.formularios-grid {
-  display: grid;
-
-  
-}
-
 .formulario-container {
-  background: #f8f9fa;
+  background: var(--color-surface);
   padding: 2rem;
-  border-radius: 15px;
-  border-left: 4px solid #3498db;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-primary);
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s ease;
+   margin-top: 2.5rem;
 }
 
 .formulario-container:hover {
   transform: translateY(-5px);
-}
-
-.formulario-container h3 {
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  font-size: 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 /* RESPONSIVE */
@@ -208,100 +236,42 @@ body {
 }
 
 @media (max-width: 768px) {
-  .app-header h1 {
-    font-size: 2.2rem;
-  }
-  
-  .app-header p {
-    font-size: 1rem;
-  }
-  
-  .app-nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  
-  .nav-btn {
-    width: 200px;
-    padding: 10px 20px;
-  }
-  
-  .app-contenido {
-    padding: 0 15px;
-  }
-  
-  .formularios-section {
-    padding: 1.5rem;
-  }
-  
-  .formulario-container {
-    padding: 1.5rem;
-  }
+  .app-header h1 { font-size: 2.2rem; }
+  .app-header p { font-size: 1rem; }
+  .app-nav { flex-direction: column; align-items: center; gap: 0.8rem; }
+  .nav-btn { width: 200px; padding: 10px 20px; }
+  .app-contenido { padding: 0 15px; }
+  .formularios-section { padding: 1.5rem; }
 }
 
 @media (max-width: 480px) {
-  .app-header {
-    padding: 1.5rem 0;
-  }
-  
-  .app-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .app-contenido {
-    padding: 0 10px;
-  }
-  
-  .formularios-section {
-    padding: 1rem;
-  }
-  
-  .formulario-container {
-    padding: 1rem;
-  }
-  
-  .seccion-titulo {
-    font-size: 1.5rem;
-  }
+  .app-header { padding: 1.5rem 0; }
+  .app-header h1 { font-size: 1.8rem; }
+  .app-contenido { padding: 0 10px; }
+  .formularios-section { padding: 1rem; }
+  .formulario-container { padding: 1rem; }
+  .seccion-titulo { font-size: 1.5rem; }
 }
 
-/* SCROLLBAR PERSONALIZADO */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #3498db, #2c3e50);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #2980b9, #34495e);
 }
 
 /* ANIMACIONES */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+.app-contenido > * { animation: fadeIn 0.6s ease-out; }
 
-.app-contenido > * {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* ESTADOS DE CARGA */
+/* ESTADO DE CARGA */
 .cargando-global {
   display: flex;
   justify-content: center;
@@ -325,46 +295,18 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* EFECTOS HOVER GLOBALES */
+/* BOTONES */
 button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-/* --- MODO OSCURO / CLARO --- */
-:root {
-  --color-fondo: #111827;
-  --color-texto: #f9fafb;
-  --color-card: #1f2937;
-  --color-boton: #3b82f6;
-}
-
-.App.light {
-  --color-fondo: #f9fafb;
-  --color-texto: #111827;
-  --color-card: #e5e7eb;
-  --color-boton: #2563eb;
-}
-
-.App {
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  transition: 0.3s ease;
-}
-
-.card, .formulario-container, .reseña-card {
-  background-color: var(--color-card);
-  color: var(--color-texto);
-}
-
-button {
-  background-color: var(--color-boton);
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
