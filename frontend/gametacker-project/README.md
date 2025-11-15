@@ -1,16 +1,97 @@
-# React + Vite
+# Frontend - GameTracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Descripción
 
-Currently, two official plugins are available:
+Este es el **frontend** del proyecto **GameTracker**, creado con **React** y **Vite**. Permite gestionar videojuegos, reseñas, estadísticas y comunicación con el backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tecnologías utilizadas
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+* **React 19**
+* **Vite**
+* **Axios**
+* **HTML2Canvas** (capturas de pantalla)
+* **jsPDF** (exportar a PDF)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Estructura del proyecto
+
+```
+frontend/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── BibliotecaJuegos.jsx / .css
+│   │   ├── EstadisticasPersonales.jsx / .css
+│   │   ├── FormularioJuego.jsx / .css
+│   │   ├── FormularioResena.jsx / .css
+│   │   ├── ListaResenas.jsx / .css
+│   │   ├── TarjetaJuego.jsx / .css
+│   ├── App.jsx
+│   ├── App.css
+│   └── main.jsx
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 🔧 Instalación
+
+### 1️⃣ Clonar el repositorio
+
+```bash
+git clone https://github.com/chris10766h/proyecto_frontend.git
+```
+
+### 2️⃣ Entrar al directorio del frontend
+
+```bash
+cd frontend/gametacker-project
+```
+
+### 3️⃣ Instalar dependencias
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ Scripts disponibles
+
+### 🟢 Desarrollo
+
+Corre el servidor de desarrollo (Vite):
+
+```bash
+npm run dev
+```
+
+---
+
+## 📌 Dependencias principales
+
+* react
+* react-dom
+* axios
+* html2canvas
+* jspdf
+
+---
+
+## 🎮 Funcionalidades
+
+* Gestión de juegos (crear, ver, eliminar)
+* Gestión de reseñas
+* Estadísticas del usuario
+* Exportación de información a PDF
+
+---
+
+## 👤 Autor
+
+Proyecto desarrollado por **[cristian david acosta hernandez]**.
