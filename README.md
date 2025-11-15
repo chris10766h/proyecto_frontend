@@ -47,11 +47,6 @@ frontend/
 git clone https://github.com/chris10766h/proyecto_frontend.git
 ```
 
-### 2️⃣ Entrar al directorio del frontend
-
-```bash
-cd frontend/gametacker-project
-```
 
 ### 3️⃣ Instalar dependencias
 
