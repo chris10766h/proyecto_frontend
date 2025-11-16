@@ -91,7 +91,11 @@ npm run dev
 * Exportación de información a PDF
 
 ---
+##  app 
 
+https://chris10766h.github.io/proyecto_frontend/
+
+---
 ## 👤 Autor
 
 Proyecto desarrollado por **[cristian david acosta hernandez]**.
