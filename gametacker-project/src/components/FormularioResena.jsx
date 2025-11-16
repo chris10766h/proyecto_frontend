@@ -30,7 +30,7 @@ const FormularioResena = ({ juegos, onResenaAgregada }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const respuesta = await axios.post('http://localhost:5000/api/resenas', formData);
+      const respuesta = await axios.post('https://proyecto-backend-zkdj.onrender.com/api/resenas', formData);
       onResenaAgregada(respuesta.data);
       setFormData({
         juegoId: '',

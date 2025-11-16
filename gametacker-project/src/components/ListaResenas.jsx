@@ -12,8 +12,8 @@ const ListaResenas = ({ juegoId = null }) => {
     const obtenerReseñas = async () => {
       try {
         const url = juegoId
-          ? `http://localhost:5000/api/resenas/juego/${juegoId}`
-          : "http://localhost:5000/api/resenas";
+          ? `https://proyecto-backend-zkdj.onrender.com/api/resenas/juego/${juegoId}`
+          : "https://proyecto-backend-zkdj.onrender.com/api/resenas";
         const respuesta = await axios.get(url);
         setReseñas(respuesta.data);
       } catch (error) {

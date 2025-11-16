@@ -11,7 +11,7 @@ const TarjetaJuego = ({ juego, onEditar, onEliminar }) => {
   useEffect(() => {
     const cargarReseñas = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:5000/api/resenas/juego/${juego._id}`);
+        const respuesta = await axios.get(`https://proyecto-backend-zkdj.onrender.com/api/resenas/juego/${juego._id}`);
         setReseñas(respuesta.data);
       } catch (error) {
         console.error('Error cargando reseñas:', error);
@@ -24,7 +24,7 @@ const TarjetaJuego = ({ juego, onEditar, onEliminar }) => {
     if (!mostrarReseñas) {
       setCargandoReseñas(true);
       try {
-        const respuesta = await axios.get(`http://localhost:5000/api/resenas/juego/${juego._id}`);
+        const respuesta = await axios.get(`https://proyecto-backend-zkdj.onrender.com/api/resenas/juego/${juego._id}`);
         setReseñas(respuesta.data);
       } catch (error) {
         console.error('Error obteniendo reseñas:', error);

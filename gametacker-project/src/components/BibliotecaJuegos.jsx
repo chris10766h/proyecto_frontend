@@ -22,7 +22,7 @@ const BibliotecaJuegos = () => {
   const obtenerJuegos = async () => {
     try {
       console.log("🔄 Obteniendo juegos...");
-      const respuesta = await axios.get("http://localhost:5000/api/juegos");
+      const respuesta = await axios.get("https://proyecto-backend-zkdj.onrender.com/api/juegos");
       console.log("✅ Juegos obtenidos:", respuesta.data);
       setJuegos(respuesta.data);
       setJuegosFiltrados(respuesta.data);
@@ -75,7 +75,7 @@ const BibliotecaJuegos = () => {
   const eliminarJuego = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar este juego?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/juegos/${id}`);
+        await axios.delete(`https://proyecto-backend-zkdj.onrender.com/api/juegos/${id}`);
         obtenerJuegos();
         alert("Juego eliminado correctamente");
       } catch (error) {
@@ -89,7 +89,7 @@ const BibliotecaJuegos = () => {
   const actualizarJuego = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/juegos/${editandoJuego._id}`, editandoJuego);
+      await axios.put(`https://proyecto-backend-zkdj.onrender.com/api/juegos/${editandoJuego._id}`, editandoJuego);
       setEditandoJuego(null);
       obtenerJuegos();
       alert("Juego actualizado correctamente");

@@ -25,7 +25,7 @@ const FormularioJuego = ({ onJuegoAgregado }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const respuesta = await axios.post('http://localhost:5000/api/juegos', {
+      const respuesta = await axios.post('https://proyecto-backend-zkdj.onrender.com/api/juegos', {
         ...formData,
         añoLanzamiento: parseInt(formData.añoLanzamiento)
       });

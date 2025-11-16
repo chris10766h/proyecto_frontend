@@ -28,7 +28,7 @@ const [modoOscuro, setModoOscuro] = useState(false); // por defecto CLARO
   useEffect(() => {
     const obtenerJuegos = async () => {
       try {
-        const respuesta = await axios.get('http://localhost:5000/api/juegos');
+        const respuesta = await axios.get('https://proyecto-backend-zkdj.onrender.com/api/juegos');
         setJuegos(respuesta.data);
       } catch (error) {
         console.error('Error obteniendo juegos:', error);

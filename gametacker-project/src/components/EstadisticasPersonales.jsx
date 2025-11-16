@@ -22,8 +22,8 @@ const EstadisticasPersonales = () => {
     const obtenerEstadisticas = async () => {
       try {
         const [juegosRes, reseñasRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/juegos'),
-          axios.get('http://localhost:5000/api/resenas')
+          axios.get('https://proyecto-backend-zkdj.onrender.com/api/juegos'),
+          axios.get('https://proyecto-backend-zkdj.onrender.com/api/resenas')
         ]);
 
         const juegos = juegosRes.data;
